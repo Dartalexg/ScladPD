@@ -1,0 +1,31 @@
+{% block AddForm %}
+<div class="modal fade" id="AddAnEntry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="addForm" >
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Добавление записи</h5>
+                <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+
+
+                {% csrf_token %}
+                <div class="modal-body">
+                    {% for field in addForm.visible_fields %}
+                        <div class="mb-3">
+                            <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="closeFormButton">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-around flex-wrap ">
+</div>
+{% endblock %}

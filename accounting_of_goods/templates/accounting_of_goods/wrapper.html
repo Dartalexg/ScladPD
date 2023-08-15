@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'bootstrap-icons-1.10.5/font/bootstrap-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'accounting_of_goods/css/style.css' %}" type="text/css">
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>-->
+    <script
+  src="https://code.jquery.com/jquery-3.7.0.min.js"
+  integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+  crossorigin="anonymous"></script>
+    <script src="{% static 'accounting_of_goods/js/script.js' %}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header class="d-flex justify-content-center py-3 mb-2">
+        {% load myTags %}
+<!--        <img src="{% static 'accounting_of_goods/images/logoA.png' %}" alt="" srcset="" height="60" style="position: absolute; left: 0px; top: 0px;">-->
+        <ul class="nav nav-pills">
+
+            <li class="nav-item"><a href="{% param_replace path='/' %}" class="nav-link" aria-current="page"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><i class="bi bi-house"></i> Главная</font></font></a></li>
+            <li class="nav-item"><a href="{% param_replace path='/receipt/' %}" class="nav-link"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Поступление</font></font></a></li>
+            <li class="nav-item"><a href="{% param_replace path='/consumption/' %}" class="nav-link"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Расход</font></font></a></li>
+            <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">О нас</font></font></a></li>
+            <li class="nav-item"><a href="{% url 'admin' %}" class="nav-link"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><i class="bi bi-gear"></i> Admin</font></font></a></li>
+        </ul>
+    </header>
+    <main class="container">
+        {% block content %}
+        <h5 class="text-danger">Контента нет 😥</h5>
+        {% endblock %}
+    </main>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+      <span class="text-muted"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;" id="copyright-date">© ОАО «РЖД», 2003 - 2023</font></font></span>
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+    </ul>
+  </footer>
+</body>
+</html>

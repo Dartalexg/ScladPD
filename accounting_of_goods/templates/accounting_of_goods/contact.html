@@ -1,0 +1,9 @@
+{% extends "accounting_of_goods/wrapper.html" %}
+{% block title %} О нас {% endblock %}
+{% block content %}
+    <p>Если у вас остались вопросы, то задавайте их по телефону:<p>
+    {% for val in values %}
+<p><a href="tel:{{val}}">{{val}}</a></p>
+<!--    <p>{{ val }}</p>-->
+    {% endfor %}
+{% endblock %}

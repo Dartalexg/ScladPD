@@ -1,0 +1,118 @@
+{% extends "accounting_of_goods/wrapper.html" %}
+{% block title %}
+    {% if type %}
+         Расход товара
+    {% else %}
+        Поступление товара
+    {% endif %}
+{% endblock %}
+{% block content %}
+<!--    <form class="form-outline w-75" method="get">-->
+<!--                <div class="input-group">-->
+<!--                    {{ form.search }}-->
+<!--                    <button type="submit" class="btn btn-primary">-->
+<!--                        <i class="bi bi-search"></i>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </form>-->
+    {% if type %}
+        <h3 class="text-danger">Расход товара</h3>
+    {% else %}
+        <h3 class="text-success">Поступление товара</h3>
+    {% endif %}
+    {% if error %}
+        <div class="row">
+            <div class="col">
+                <span class="text-danger">{{ error }}</span>
+            </div>
+        </div>
+    {% endif %}
+{% include 'accounting_of_goods/includes/search_form.html' %}
+    {% if rows %}
+        {% for i in rows %}
+            <div class="row shadow-sm p-2 my-3 bg-body rounded">
+                <div class="col-xl-2 ">
+                    <p>{{ i.category }}</p>
+                </div>
+                <div class="col-xl-4">
+                    <p>{{ i.product }}</p>
+                </div>
+                <div class="col-xl-1">
+                    <p>{{ i.count }} шт.</p>
+                </div>
+                <div class="col-xl-1">
+                    <p>{{ i.division }}</p>
+                </div>
+                <div class="col-xl-2">
+                    <p>{{ i.date | date:'D d M. Y' }}</p>
+                </div>
+                <div class="col-xl-2 ">
+                    <form method="get">
+                        <button type="button" value="1" class="btn btn-primary add" data-bs-toggle="modal" data-bs-target="#AddAnEntry" category="{{ i.category.id_category }}" product="{{ i.product.id_product }}" division="{{ i.division.id_division }}" count = "{{ i.sum_price }}">
+                            <i class="bi bi-plus"></i>Запись
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+        {% include 'accounting_of_goods/includes/add_form.html' %}
+
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            <p>Нет записей</p>
+        </div>
+    {% endif %}
+    <nav class="">
+        {% load myTags %}
+        <ul class="pagination justify-content-center">
+            {% if rows.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% param_replace page=1 %}">&laquo; первая</i></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link"  href="?{% param_replace page=rows.previous_page_number %}"><i class="bi bi-arrow-left-short"></i></a>
+                </li>
+            {% else %}      <!--отключенные кнопки-->
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&laquo; первая</i></a>
+                </li>
+                <li class="page-item disabled">
+                    <a class="page-link"  href="#"><i class="bi bi-arrow-left-short"></i></a>
+                </li>
+            {% endif %}
+            <li class="page-item page-link active">Страница {{ rows.number }} из {{ rows.paginator.num_pages }}.</li>
+            {% if rows.has_next %}
+                <li class="page-item ">
+<!--                        <a class="page-link" href="?page={{ rows.next_page_number }}"><i class="bi bi-arrow-right-short"></i></a>-->
+                        <a class="page-link" href="?{% param_replace page=rows.next_page_number %}"><i class="bi bi-arrow-right-short"></i></a>
+                    </li>
+                <li class="page-item">
+                    <a class="page-link" href="?{% param_replace page=rows.paginator.num_pages %}">последняя &raquo;</a>
+                </li>
+            {% else %}      <!--отключенные кнопки-->
+                <li class="page-item disabled">
+                    <a class="page-link" href="#"><i class="bi bi-arrow-right-short"></i></a>
+                </li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">последняя &raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+        {% if pageSize %}
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <form action="" method="get" class="">
+                        <div class="input-group col-1" style="font-size: 14px;">
+                            <label for="{{ pageSize.count.auto_id }}" class="fw-light input-group-text">{{
+                                pageSize.count.label }}</label>
+                            {{ pageSize.count }}
+                            <button type="submit" class="btn btn-secondary input-group-text">применить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </nav>
+
+
+{% endblock %}

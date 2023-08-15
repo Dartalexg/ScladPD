@@ -1,0 +1,49 @@
+{% block content %}
+    {% load static %}
+    <form method="get" class="row" id="mainSearchForm">
+        <div class="col-sm">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" >
+                    Категории
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {% for category in combinedFilterForm.categories %}
+                        <div class="dropdown-item">{{ category }}</div>
+                    {% endfor %}
+                    <button class="btn btn-danger select-item-clear-button my-1">Очистить все</button>
+                    <button class="btn btn-primary" type="submit">Применить фильтр</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" >
+                    Отделы
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {% for division in combinedFilterForm.divisions %}
+                        <div class="dropdown-item">{{ division }}</div>
+                    {% endfor %}
+                    <button class="btn btn-danger select-item-clear-button my-1">Очистить все</button>
+                    <button class="btn btn-primary" type="submit">Применить фильтр</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            {{ combinedFilterForm.dateRange }}
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                {{ combinedFilterForm.search }}
+                <button type="button" class="btn btn-outline-danger" id="clearSearchInputButton" style="position: absolute; right: 41px; display: none;">
+                    <i class="bi bi-x-lg "></i>
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

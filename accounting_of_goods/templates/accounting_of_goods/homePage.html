@@ -1,0 +1,134 @@
+{% extends "accounting_of_goods/wrapper.html" %}
+{% load static %}
+{% block title %} Главная страница {% endblock %}
+{% block content %}
+<!--<div class="row">-->
+<!--    <div class="col-6">-->
+<!--        <div class="dropdown">-->
+<!--            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"-->
+<!--                    data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                Кнопка выпадающего списка-->
+<!--            </button>-->
+<!--            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">-->
+<!--                 <form method="get">-->
+
+<!--                     <div class="dropdown-item">{{ categoryFilterForm }}</div>-->
+<!--                    <button class="btn btn-secondary" type="submit">Применить фильтр</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-6">-->
+<!--            <form class="form-outline w-75" method="get">-->
+<!--                <div class="input-group">-->
+<!--                    {{ form.search }}-->
+<!--                    <button type="submit" class="btn btn-primary">-->
+<!--                        <i class="bi bi-search"></i>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+{% include 'accounting_of_goods/includes/search_form.html' %}
+<!--<form method="get" class="row">-->
+<!--    <div class="col-6">-->
+<!--        <div class="dropdown">-->
+<!--            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"-->
+<!--                    data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" >-->
+<!--                Категории-->
+<!--            </button>-->
+<!--            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">-->
+<!--                {% for category in combinedFilterForm.categories %}-->
+<!--                    <div class="dropdown-item">{{ category }}</div>-->
+<!--                {% endfor %}-->
+<!--                <button class="btn btn-danger select-item-clear-button">Очистить все</button>-->
+<!--                <button class="btn btn-secondary" type="submit">Применить фильтр</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-6">-->
+<!--        <div class="input-group">-->
+<!--            {{ combinedFilterForm.search }}-->
+<!--            <button type="submit" class="btn btn-primary">-->
+<!--                <i class="bi bi-search"></i>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</form>-->
+{% if error %}
+    <div class="row">
+        <div class="col">
+            <span class="text-danger">{{ error }}</span>
+        </div>
+    </div>
+{% endif %}
+{% if rows %}
+{% for i in rows %}
+<div class="row shadow-sm p-2 my-3 bg-body rounded">
+    <div class="col-xl-2">
+        <p>{{ i.category__name }}</p>
+    </div>
+    <div class="col-xl-4">
+        <p>{{ i.product__name }}</p>
+    </div>
+    <div class="col-xl-2">
+        {% if i.sum_price < 0 %}
+        <p class="text-danger">Ошибка данных
+            {% elif i.sum_price == 0 %}
+        <p class="text-danger">
+            {% else %}
+        <p class="text-success">
+            {% endif %}
+            {{ i.sum_price }} шт.</p>
+    </div>
+    <div class="col-xl-2">
+        <p>{{i.division__name}}</p>
+    </div>
+    <div class="col-xl-2">
+        <form method="get">
+            <button type="button" value="1" class="btn btn-primary add" data-bs-toggle="modal" data-bs-target="#AddAnEntry" category="{{ i.category }}" product="{{ i.product }}" division="{{ i.division__id_division }}" count = "{{ i.sum_price }}">
+                <i class="bi bi-plus"></i>Запись
+            </button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="alert alert-warning" role="alert">
+    <p>Нет записей</p>
+</div>
+{% endif %}
+<!-- Модальное окно -->
+{% include 'accounting_of_goods/includes/add_form.html' %}
+<!--<div class="modal fade" id="AddAnEntry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <form method="post" id="addForm" >-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="exampleModalLabel">Добавление записи</h5>-->
+<!--                <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>-->
+<!--            </div>-->
+
+
+<!--                {% csrf_token %}-->
+<!--                <div class="modal-body">-->
+<!--                    {% for field in addForm.visible_fields %}-->
+<!--                        <div class="mb-3">-->
+<!--                            <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>-->
+<!--                            {{ field }}-->
+<!--                        </div>-->
+<!--                    {% endfor %}-->
+<!--                    {{ addForm.hidden_category }}{{ addForm.hidden_product }}   &lt;!&ndash;Мёртвый код&ndash;&gt;-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="closeFormButton">Закрыть</button>-->
+<!--                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="d-flex justify-content-around flex-wrap ">-->
+<!--</div>-->
+{% endblock %}
